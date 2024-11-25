@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category }} Artwork Form</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style_artwork_form.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{% static 'images/logo.svg' %}" alt="Logo">
+                The Art Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'ib_portfolios' %}">IB Portfolios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'other_portfolios' %}">Other Portfolios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Artwork Form -->
+    <section class="form-section"
+        style="background-image: url('{% static 'images/' %}{{ category }}.jpg');">
+        <div class="form-container">
+            <h1>{{ category }} Artwork</h1>
+            <p>Fill in the details below for your artwork.</p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="film" {% if category == 'film' %}selected{% endif %}>Film</option>
+                        <option value="visual_arts" {% if category == 'visual_arts' %}selected{% endif %}>Visual Arts</option>
+                        <option value="arts" {% if category == 'arts' %}selected{% endif %}>Arts</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="permission" class="form-label">Permission</label>
+                    <input type="text" class="form-control" id="permission" name="permission" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer bg-dark text-white py-3">
+        <div class="container text-center">
+            <p>Contact Us: theartportal@mail.com | +91 (987)-654-3210</p>
+        </div>
+    </footer>
+
+</body>
+</html>
